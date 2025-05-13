@@ -1,0 +1,45 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Memory.jack
+/**
+ * This library provides two services: direct access to the computer's main
+ * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
+ * consists of 32,768 words, each holding a 16-bit binary number.
+ */ 
+// projects/12/Memory.jack
+class Memory {
+
+    /** Initializes the class. */
+    function void init() {
+        // emits: call Memory.init 0
+        do Memory.init();
+        return;
+    }
+
+    /** Returns the RAM value at the given address. */
+    function int peek(int address) {
+        // emits: push argument 0; call Memory.peek 1
+        return Memory.peek(address);
+    }
+
+    /** Sets the RAM value at the given address to the given value. */
+    function void poke(int address, int value) {
+        // emits: push argument 0; push argument 1; call Memory.poke 2
+        do Memory.poke(address, value);
+        return;
+    }
+
+    /** Finds an available RAM block of the given size and returns its base address. */
+    function int alloc(int size) {
+        // emits: push argument 0; call Memory.alloc 1
+        return Memory.alloc(size);
+    }
+
+    /** De-allocates the given object by making it available for future allocations. */
+    function void deAlloc(Array o) {
+        // emits: push argument 0; call Memory.deAlloc 1
+        do Memory.deAlloc(o);
+        return;
+    }
+}

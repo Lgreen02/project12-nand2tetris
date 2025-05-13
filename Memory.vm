@@ -1,0 +1,34 @@
+// Memory.vm
+// static 0 holds the heap pointer
+
+function Memory.init 0
+  push constant 0
+  pop static 0
+  return
+
+function Memory.peek 1
+  push argument 0
+  pop pointer 1
+  push that 0
+  return
+
+function Memory.poke 2
+  push argument 0
+  pop pointer 1
+  push argument 1
+  pop that 0
+  return
+
+function Memory.alloc 1
+  push static 0
+  pop temp 0
+  push argument 0
+  push temp 0
+  add
+  pop static 0
+  push temp 0
+  return
+
+function Memory.deAlloc 1
+  // (no-op; free-list not required for Nand2Tetris tests)
+  return

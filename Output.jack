@@ -1,0 +1,159 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Output.jack
+/**
+ * A library of functions for writing text on the screen.
+ * The Hack physical screen consists of 512 rows of 256 pixels each.
+ * The library uses a fixed font, in which each character is displayed 
+ * within a frame which is 11 pixels high (including 1 pixel for inter-line 
+ * spacing) and 8 pixels wide (including 2 pixels for inter-character spacing).
+ * The resulting grid accommodates 23 rows (indexed 0..22, top to bottom)
+ * of 64 characters each (indexed 0..63, left to right). The top left 
+ * character position on the screen is indexed (0,0). A cursor, implemented
+ * as a small filled square, indicates where the next character will be displayed.
+ */// projects/12/Output.jack
+/**
+ * A library of functions for writing text on the screen.  
+ * The Hack screen is 512×256 pixels; we use an 11×8 font,
+ * giving 23 rows of 64 characters.
+ */
+class Output {
+
+    // maps ASCII codes → 11-row bitmaps
+    static Array charMaps;
+    // current cursor position (row 0..22, col 0..63)
+    static int cursorRow;
+    static int cursorCol;
+    // current drawing color: true=black, false=white
+    static boolean color;
+
+    /** Initializes the screen, builds the charMaps, resets cursor. */
+    function void init() {
+        do Screen.init();
+        do Output.initMap();
+        let cursorRow = 0;
+        let cursorCol = 0;
+        let color     = true;
+        return;
+    }
+
+    /** Builds the charMaps array. */
+    function void initMap() {
+        var int i;
+        let charMaps = Array.new(127);
+        // — the provided stub’s create calls go here —
+        // e.g. do Output.create(0,63,63,63,63,63,63,63,63,63,63,63); etc...
+        return;
+    }
+
+    /** Creates one 11-row bitmap at charMaps[index]. */
+    function void create(int index,
+                         int a,int b,int c,int d,int e,
+                         int f,int g,int h,int i,int j,int k) {
+        var Array map;
+        let map = Array.new(11);
+        let charMaps[index] = map;
+        let map[0]  = a;   let map[1]  = b;   let map[2]  = c;
+        let map[3]  = d;   let map[4]  = e;   let map[5]  = f;
+        let map[6]  = g;   let map[7]  = h;   let map[8]  = i;
+        let map[9]  = j;   let map[10] = k;
+        return;
+    }
+
+    /** Returns the 11-row bitmap array for character c. */
+    function Array getMap(char c) {
+        if ((c < 32) | (c > 126)) {
+            let c = 0;
+        }
+        return charMaps[c];
+    }
+
+    /** Moves the cursor to (i,j) and erases whatever was there. */
+    function void moveCursor(int i, int j) {
+        let cursorRow = i;
+        let cursorCol = j;
+        // erase in white
+        do Screen.setColor(false);
+        let x0 = cursorCol * 8;
+        let y0 = cursorRow * 11;
+        do Screen.drawRectangle(x0, y0, x0 + 7, y0 + 10);
+        // restore color
+        do Screen.setColor(color);
+        return;
+    }
+
+    /** Draws character c at the current cursor position, then advances it. */
+    function void printChar(char c) {
+        var Array map;
+        var int x0, y0, y, x, rowBits, mask;
+        let map = Output.getMap(c);
+        let y0  = cursorRow * 11;
+        let x0  = cursorCol * 8;
+        let y   = 0;
+        while (y < 11) {
+            let rowBits = map[y];
+            let mask    = 128;   // 1<<7
+            let x       = 0;
+            while (x < 8) {
+                if ((rowBits & mask) != 0) {
+                    do Screen.drawPixel(x0 + x, y0 + y);
+                }
+                let mask = mask / 2;
+                let x    = x + 1;
+            }
+            let y = y + 1;
+        }
+        // advance cursor
+        let cursorCol = cursorCol + 1;
+        if (cursorCol = 64) {
+            let cursorCol = 0;
+            let cursorRow = cursorRow + 1;
+            if (cursorRow = 23) {
+                let cursorRow = 0;
+            }
+        }
+        return;
+    }
+
+    /** Prints each character of s in turn. */
+    function void printString(String s) {
+        var int i;
+        let i = 0;
+        while (i < s.length()) {
+            do Output.printChar(s.charAt(i));
+            let i = i + 1;
+        }
+        return;
+    }
+
+    /** Converts the integer to a string and prints it. */
+    function void printInt(int value) {
+        var String s;
+        let s = String.new(12);
+        do s.setInt(value);
+        do Output.printString(s);
+        return;
+    }
+
+    /** Moves to the start of the next line. */
+    function void println() {
+        let cursorCol = 0;
+        let cursorRow = cursorRow + 1;
+        return;
+    }
+
+    /** Moves the cursor back one position and erases that character. */
+    function void backSpace() {
+        if (cursorCol > 0) {
+            let cursorCol = cursorCol - 1;
+        } else {
+            if (cursorRow > 0) {
+                let cursorRow = cursorRow - 1;
+                let cursorCol = 63;
+            }
+        }
+        do Output.moveCursor(cursorRow, cursorCol);
+        return;
+    }
+}

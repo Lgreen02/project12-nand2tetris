@@ -1,0 +1,57 @@
+// projects/12/Screen.jack
+/**
+ * A library of functions for displaying graphics on the screen.
+ * The Hack physical screen consists of 512 rows (0..511) of 256 pixels each (0..255).
+ * The top left pixel is (0,0).
+ */
+class Screen {
+
+    /** Initializes the Screen. */
+    function void init() {
+        // emits: call Screen.init 0
+        do Screen.init();
+        return;
+    }
+
+    /** Erases the entire screen. */
+    function void clearScreen() {
+        // emits: call Screen.clearScreen 0
+        do Screen.clearScreen();
+        return;
+    }
+
+    /** Sets the current color for draw operations: true=black, false=white. */
+    function void setColor(boolean b) {
+        // emits: push argument 0; call Screen.setColor 1
+        do Screen.setColor(b);
+        return;
+    }
+
+    /** Draws the (x,y) pixel using the current color. */
+    function void drawPixel(int x, int y) {
+        // emits: push argument 0; push argument 1; call Screen.drawPixel 2
+        do Screen.drawPixel(x, y);
+        return;
+    }
+
+    /** Draws a line from (x1,y1) to (x2,y2) using the current color. */
+    function void drawLine(int x1, int y1, int x2, int y2) {
+        // emits: push arg0, arg1, arg2, arg3; call Screen.drawLine 4
+        do Screen.drawLine(x1, y1, x2, y2);
+        return;
+    }
+
+    /** Draws a filled rectangle from (x1,y1) to (x2,y2) using the current color. */
+    function void drawRectangle(int x1, int y1, int x2, int y2) {
+        // emits: push arg0–arg3; call Screen.drawRectangle 4
+        do Screen.drawRectangle(x1, y1, x2, y2);
+        return;
+    }
+
+    /** Draws a filled circle of radius r ≤ 181 around (x,y). */
+    function void drawCircle(int x, int y, int r) {
+        // emits: push arg0, arg1, arg2; call Screen.drawCircle 3
+        do Screen.drawCircle(x, y, r);
+        return;
+    }
+}

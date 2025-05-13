@@ -1,0 +1,47 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+// projects/12/Math.jack
+class Math {
+    static int n;             // number of bits (unused in stub)
+    static Array powersOfTwo; // bit‐mask table (unused in stub)
+
+    /** Initializes the Math library. */
+    function void init() {
+        // emits: call Math.init 0
+        do Math.init();
+        return;
+    }
+
+    /** x * y ⇒ call Math.multiply 2 */
+    function int multiply(int x, int y) {
+        // emits: push argument 0; push argument 1; call Math.multiply 2
+        return Math.multiply(x, y);
+    }
+
+    /** x / y ⇒ call Math.divide 2 */
+    function int divide(int x, int y) {
+        return Math.divide(x, y);
+    }
+
+    /** √x ⇒ call Math.sqrt 1 */
+    function int sqrt(int x) {
+        return Math.sqrt(x);
+    }
+
+    /** larger of a,b ⇒ call Math.max 2 */
+    function int max(int a, int b) {
+        return Math.max(a, b);
+    }
+
+    /** smaller of a,b ⇒ call Math.min 2 */
+    function int min(int a, int b) {
+        return Math.min(a, b);
+    }
+
+    /** |x| ⇒ call Math.abs 1 */
+    function int abs(int x) {
+        return Math.abs(x);
+    }
+}

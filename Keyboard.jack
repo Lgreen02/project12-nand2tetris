@@ -1,0 +1,53 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Keyboard.jack
+/**
+ * A library for handling user input from the keyboard.
+ */
+// projects/12/Keyboard.jack
+class Keyboard {
+
+    /** Initializes the keyboard. */
+    function void init() {
+        // emits: call Keyboard.init 0
+        do Keyboard.init();
+        return;
+    } 
+
+    /**
+     * Returns the character of the currently pressed key on the keyboard;
+     * if no key is currently pressed, returns 0.
+     */
+    function char keyPressed() {
+        // emits: push argument 0; call Keyboard.keyPressed 0
+        return Keyboard.keyPressed();
+    }
+
+    /**
+     * Waits until a key is pressed and released,
+     * echoes it to the screen, and returns it.
+     */
+    function char readChar() {
+        // emits: call Keyboard.readChar 0
+        return Keyboard.readChar();
+    }
+
+    /**
+     * Displays the message, reads characters until newline,
+     * echoes them, and returns the resulting string.
+     */
+    function String readLine(String message) {
+        // emits: push argument 0; call Keyboard.readLine 1
+        return Keyboard.readLine(message);
+    }   
+
+    /**
+     * Displays the message, reads characters until newline,
+     * echoes them, parses an integer, and returns it.
+     */
+    function int readInt(String message) {
+        // emits: push argument 0; call Keyboard.readInt 1
+        return Keyboard.readInt(message);
+    }
+}
